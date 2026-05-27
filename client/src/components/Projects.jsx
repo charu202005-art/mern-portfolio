@@ -6,7 +6,7 @@ function Projects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/projects")
+    fetch("https://mern-portfolio-veds.onrender.com")
       .then((res) => res.json())
       .then((data) => {
         setProjectData(data);
