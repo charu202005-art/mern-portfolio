@@ -95,12 +95,12 @@ function App() {
               </a>
 
               <a
-                href="/Charmathy_M_Resume.pdf"
-                download="Charmathy_M_Resume.pdf"
-                className="px-8 py-4 rounded-xl border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all duration-300 font-semibold"
-              >
-                GET RESUME
-              </a>
+  href="/Charmathy_M_Resume.pdf"
+  download
+  className="px-8 py-4 rounded-xl border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all duration-300 font-semibold"
+>
+  GET RESUME
+</a>
             </motion.div>
 
           </div>
