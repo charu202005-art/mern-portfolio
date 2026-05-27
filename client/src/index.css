@@ -1,0 +1,17 @@
+@import "tailwindcss";
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #000;
+}
+
+/* smooth hover feel */
+a {
+  transition: all 0.3s ease;
+}
+.card-3d:hover {
+  transform: perspective(1000px) rotateX(8deg) rotateY(-8deg) scale(1.03);
+  box-shadow: 0 30px 60px rgba(0, 255, 255, 0.15);
+}
