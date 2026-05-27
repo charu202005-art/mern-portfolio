@@ -25,12 +25,13 @@ function App() {
 
       <section
         id="home"
-        className="min-h-screen bg-gradient-to-b from-black via-[#0f0f1a] to-black text-white px-6 md:px-16"
+        className="min-h-screen bg-gradient-to-b from-black via-[#0f0f1a] to-black text-white px-4 md:px-10 py-20"
       >
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 items-center gap-12 pt-32">
+        <div className="max-w-7xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-12 pt-20">
 
           {/* LEFT SIDE */}
-          <div>
+          {/* LEFT SIDE */}
+<div className="w-full lg:w-1/2 text-center lg:text-left">
 
             {/* Welcome Badge */}
             <motion.div
@@ -48,8 +49,7 @@ function App() {
             <motion.h1
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-extrabold leading-tight"
+              transition={{ duration: 1, delay: 0.2 }}className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-center lg:text-left"className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-center lg:text-left"
             >
               Designing <span className="text-white">Future-Ready</span>{" "}
               <span className="text-cyan-500">Websites</span>
@@ -62,7 +62,7 @@ function App() {
               transition={{ duration: 1, delay: 0.4 }}
               className="mt-8 max-w-xl"
             >
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="text-gray-400 text-sm md:text-lg leading-relaxed">
                 I'm{" "}
                 <span className="text-white font-semibold">
                   Charmathy M
@@ -85,7 +85,7 @@ function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="flex gap-4 mt-10 flex-wrap"
+              className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start"
             >
               <a
                 href="#contact"
@@ -110,7 +110,7 @@ function App() {
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="hidden lg:block"
+            className="w-full lg:w-1/2"
           >
             <div className="bg-black/60 border border-cyan-500/20 rounded-2xl overflow-hidden shadow-xl backdrop-blur-xl">
 
@@ -118,7 +118,7 @@ function App() {
               <div
                 className="mx-auto mt-3 w-[95%] md:w-[85%]
                 flex items-center justify-between
-                px-10 py-4
+                px-4 md:px-10 py-3 md:py-4
                 bg-white/5 backdrop-blur-xl
                 border border-white/10
                 rounded-full
@@ -136,7 +136,7 @@ function App() {
               </div>
 
               {/* Code Area */}
-              <pre className="p-6 text-sm overflow-x-auto">
+              <pre className="p-4 md:p-6 text-xs md:text-sm overflow-x-auto">
                 <code className="text-gray-300">
 {`const developer = {
   name: 'Charmathy M',
