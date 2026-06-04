@@ -1,6 +1,8 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Education from "./components/Education";
@@ -8,8 +10,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-
-import { motion } from "framer-motion";
+import GravityScene from "./components/GravityScene";
 
 function App() {
   useEffect(() => {
@@ -20,136 +21,98 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="bg-dark-bg text-white selection:bg-brand-cyan/20 selection:text-white">
       <Navbar />
 
+      {/* HERO SECTION */}
       <section
         id="home"
-        className="min-h-screen bg-gradient-to-b from-black via-[#0f0f1a] to-black text-white px-4 md:px-10 py-20"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 md:px-12 py-24 md:py-32 bg-[radial-gradient(ellipse_at_top,_rgba(0,240,255,0.07),_transparent_60%)]"
       >
-        <div className="max-w-7xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-12 pt-20">
+        {/* Subtle grid background pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(255,255,255,0.01)_1px,_transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-40" />
 
-          {/* LEFT SIDE */}
-          {/* LEFT SIDE */}
-<div className="w-full lg:w-1/2 text-center lg:text-left">
-
-            {/* Welcome Badge */}
+        <div className="max-w-7xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative z-10">
+          
+          {/* LEFT SIDE - CONTENT */}
+          <div className="w-full lg:w-1/2 text-center lg:text-left">
             <motion.div
-              initial={{ opacity: 0, y: -50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.8 }}
               className="mb-6"
             >
-              <span className="inline-block px-6 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm tracking-[0.25em] font-semibold uppercase backdrop-blur-sm shadow-lg">
-                Welcome To My Portfolio
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 text-brand-cyan text-xs md:text-sm tracking-[0.2em] font-semibold uppercase backdrop-blur-md shadow-lg shadow-brand-cyan/5">
+                <span className="w-2 h-2 rounded-full bg-brand-cyan animate-ping" />
+                Welcome To My Space
               </span>
             </motion.div>
 
-            {/* Main Heading */}
             <motion.h1
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-center lg:text-left"className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-center lg:text-left"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight"
             >
-              Designing <span className="text-white">Future-Ready</span>{" "}
-              <span className="text-cyan-500">Websites</span>
+              Designing <span className="bg-gradient-to-r from-brand-cyan via-white to-brand-purple bg-clip-text text-transparent">Future-Ready</span> Websites
             </motion.h1>
 
-            {/* Description */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="mt-8 max-w-xl"
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-6 max-w-xl mx-auto lg:mx-0"
             >
-              <p className="text-gray-400 text-sm md:text-lg leading-relaxed">
-                I'm{" "}
-                <span className="text-white font-semibold">
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed">
+                Hi, I'm{" "}
+                <span className="text-white font-semibold tracking-wide">
                   Charmathy M
                 </span>
-                , a passionate
+                , a creative and result-driven
               </p>
 
-              <h2 className="text-xl md:text-2xl font-bold text-cyan-400 animate-pulse mt-2">
+              <h2 className="text-xl md:text-3xl font-extrabold tracking-wider bg-gradient-to-r from-brand-cyan to-brand-purple bg-clip-text text-transparent mt-2">
                 MERN STACK DEVELOPER
               </h2>
 
-              <p className="text-gray-400 text-lg leading-relaxed mt-2">
-                Building modern and responsive web applications with clean UI,
-                scalable backend systems, and modern technologies.
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed mt-4">
+                Creating highly interactive web applications with robust backend systems, intuitive user interfaces, and engaging 3D experiences.
               </p>
             </motion.div>
 
-            {/* Buttons */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 mt-8 justify-center lg:justify-start"
             >
               <a
                 href="#contact"
-                className="px-8 py-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 transition-all duration-300 font-semibold"
+                className="px-8 py-4 rounded-xl bg-brand-cyan text-black hover:bg-white hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all duration-300 font-bold text-sm tracking-wider uppercase"
               >
-                LET'S COLLABORATE
+                Let's Collaborate
               </a>
 
               <a
-  href="/Charmathy_M_Resume.pdf"
-  download
-  className="px-8 py-4 rounded-xl border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all duration-300 font-semibold"
->
-  GET RESUME
-</a>
+                href="/Charmathy_M_Resume.pdf"
+                download
+                className="px-8 py-4 rounded-xl border border-white/10 hover:border-brand-cyan text-white hover:text-brand-cyan transition-all duration-300 font-bold text-sm tracking-wider uppercase backdrop-blur-sm"
+              >
+                Get Resume
+              </a>
             </motion.div>
-
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT SIDE - 3D CANVAS */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="w-full lg:w-1/2"
+            className="w-full lg:w-1/2 h-[350px] sm:h-[450px] lg:h-[550px] flex items-center justify-center relative"
           >
-            <div className="bg-black/60 border border-cyan-500/20 rounded-2xl overflow-hidden shadow-xl backdrop-blur-xl">
-
-              {/* Top Bar */}
-              <div
-                className="mx-auto mt-3 w-[95%] md:w-[85%]
-                flex items-center justify-between
-                px-4 md:px-10 py-3 md:py-4
-                bg-white/5 backdrop-blur-xl
-                border border-white/10
-                rounded-full
-                shadow-lg"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                  <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                </div>
-
-                <span className="text-xs text-gray-400">
-                  Portfolio.ts
-                </span>
-              </div>
-
-              {/* Code Area */}
-              <pre className="p-4 md:p-6 text-xs md:text-sm overflow-x-auto">
-                <code className="text-gray-300">
-{`const developer = {
-  name: 'Charmathy M',
-  focus: 'Fullstack Development',
-  skills: ['HTML', 'CSS', 'JavaScript', 'React'],
-  motto: 'Build Modern Web Apps'
-};
-
-developer.showcase();`}
-                </code>
-              </pre>
-
-            </div>
+            {/* Soft decorative glow behind canvas */}
+            <div className="absolute w-72 h-72 rounded-full bg-brand-cyan/10 blur-[120px] pointer-events-none" />
+            <GravityScene />
           </motion.div>
 
         </div>
@@ -161,7 +124,7 @@ developer.showcase();`}
       <Projects />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 }
 
