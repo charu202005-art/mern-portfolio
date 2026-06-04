@@ -11,7 +11,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* offset for the floating navbar */
+  scroll-padding-top: 80px;
+  /* offset for the floating navbar */
 }
 
 body {
@@ -25,15 +26,18 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #08080c;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 240, 255, 0.15);
   border-radius: 4px;
   border: 2px solid #08080c;
   transition: all 0.3s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 240, 255, 0.4);
 }
