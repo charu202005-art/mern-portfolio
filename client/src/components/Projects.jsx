@@ -1,19 +1,28 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub, FaQrcode, FaRobot, FaLaptopCode, FaDatabase } from "react-icons/fa";
 
 const SkeletonCard = () => (
   <div className="glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 animate-pulse">
-    <div className="w-full h-48 bg-white/5 rounded-xl mb-5" />
     <div className="h-6 bg-white/10 rounded-md w-3/4 mb-4" />
     <div className="h-4 bg-white/5 rounded-md w-full mb-2" />
     <div className="h-4 bg-white/5 rounded-md w-5/6 mb-6" />
-    <div className="h-10 bg-white/10 rounded-xl w-1/3" />
+    <div className="h-10 bg-white/10 rounded-xl w-1/3 mt-6" />
   </div>
 );
 
+const getProjectIcon = (title) => {
+  const t = title.toLowerCase();
+  if (t.includes("qr") || t.includes("billing")) return <FaQrcode size={22} className="text-brand-cyan" />;
+  if (t.includes("robot") || t.includes("navia")) return <FaRobot size={22} className="text-brand-purple" />;
+  if (t.includes("guide") || t.includes("map")) return <FaRobot size={22} className="text-brand-purple" />;
+  if (t.includes("stack") || t.includes("fullstack") || t.includes("mern")) return <FaLaptopCode size={22} className="text-brand-cyan" />;
+  return <FaDatabase size={22} className="text-brand-cyan" />;
+};
+
 const ProjectCard = ({ project, variants }) => {
   const cardRef = useRef(null);
+  const [imageError, setImageError] = useState(false);
 
   // Track cursor position coordinates relative to card center
   const x = useMotionValue(0);
@@ -72,8 +81,22 @@ const ProjectCard = ({ project, variants }) => {
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 card-hover-3d shadow-2xl relative overflow-hidden flex flex-col justify-between"
+      className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 card-hover-3d shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[280px]"
     >
+      {/* Blurred background image blend (Holographic watermark) */}
+      {project.image && !imageError && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 rounded-2xl select-none">
+          <img
+            src={project.image}
+            alt=""
+            onError={() => setImageError(true)}
+            className="w-full h-full object-cover filter blur-[35px] opacity-[0.08] group-hover:opacity-[0.20] group-hover:scale-110 transition-all duration-700 ease-out"
+          />
+          {/* Subtle gradient vignette to blend edges */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/90 to-transparent" />
+        </div>
+      )}
+
       {/* Dynamic light reflection glare layer */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-30"
@@ -84,48 +107,46 @@ const ProjectCard = ({ project, variants }) => {
       />
 
       {/* Preserve 3D context wrapper for child elements */}
-      <div style={{ transformStyle: "preserve-3d" }}>
+      <div style={{ transformStyle: "preserve-3d" }} className="relative z-10">
         {/* Decorative card top border line glow on hover */}
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-        {/* Image container */}
-        <div className="w-full h-48 flex items-center justify-center bg-black/40 rounded-xl mb-5 overflow-hidden border border-white/5 relative card-hover-3d-child">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="max-h-full max-w-full object-cover group-hover:scale-105 transition-all duration-500"
-          />
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-        </div>
+        {/* Top Header line: Badges & Glowing themed icon */}
+        <div className="flex justify-between items-start gap-4 mb-4" style={{ transformStyle: "preserve-3d" }}>
+          {/* Tech Badges */}
+          <div className="flex flex-wrap gap-2 depth-badge">
+            {(project.technologies && project.technologies.length > 0
+              ? project.technologies
+              : ["HTML", "CSS", "JavaScript"]
+            ).map((tech, techIdx) => (
+              <span
+                key={techIdx}
+                className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
 
-        {/* Tech Badges */}
-        <div className="flex flex-wrap gap-2 mb-3 depth-badge">
-          {(project.technologies && project.technologies.length > 0
-            ? project.technologies
-            : ["HTML", "CSS", "JavaScript"]
-          ).map((tech, techIdx) => (
-            <span
-              key={techIdx}
-              className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10"
-            >
-              {tech}
-            </span>
-          ))}
+          {/* Floating glowing thematic icon */}
+          <div className="depth-icon p-2 rounded-xl bg-white/5 border border-white/10 group-hover:border-brand-cyan/35 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all duration-300 transform group-hover:scale-110 flex items-center justify-center">
+            {getProjectIcon(project.title)}
+          </div>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors leading-tight depth-title">
+        <h3 className="text-xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent group-hover:from-brand-cyan group-hover:to-white transition-all duration-300 leading-tight depth-title">
           {project.title}
         </h3>
 
         {/* Description */}
-        <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-3 depth-desc">
+        <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-4 depth-desc">
           {project.description}
         </p>
       </div>
 
       {/* Button actions */}
-      <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between depth-actions">
+      <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between depth-actions relative z-10">
         <a
           href={project.link}
           target="_blank"
