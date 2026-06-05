@@ -17,7 +17,11 @@ function Projects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://mern-portfolio-veds.onrender.com/api/projects")
+    const url = window.location.hostname === "localhost"
+      ? "http://localhost:5000/api/projects"
+      : "https://mern-portfolio-veds.onrender.com/api/projects";
+
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setProjectData(data);
@@ -38,15 +42,19 @@ function Projects() {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+    hidden: { opacity: 0, y: 50, rotateX: 20, rotateY: -10, scale: 0.9 },
+    show: { opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1, transition: { type: "spring", stiffness: 90, damping: 14 } }
   };
 
   return (
     <section
       id="projects"
-      className="relative min-h-screen bg-[radial-gradient(ellipse_at_top,_rgba(0,240,255,0.03),_transparent_50%)] text-white px-6 md:px-12 py-24 overflow-hidden"
+      className="relative py-16 md:py-28 px-6 lg:min-h-screen bg-[radial-gradient(ellipse_at_top,_rgba(0,240,255,0.03),_transparent_50%)] text-white overflow-hidden"
     >
+      {/* Floating background ambient lights */}
+      <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-brand-cyan/5 blur-[120px] animate-float-slow pointer-events-none" />
+      <div className="absolute bottom-1/4 right-10 w-96 h-96 rounded-full bg-brand-purple/5 blur-[120px] animate-float-medium pointer-events-none" />
+
       {/* Decorative center grid line background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.005)_1px,_transparent_1px)] bg-[size:100%_40px] pointer-events-none" />
 
@@ -89,14 +97,14 @@ function Projects() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 hover:border-brand-cyan/20 hover:bg-white/[0.02] transition-all duration-500 shadow-2xl relative overflow-hidden flex flex-col justify-between"
+                className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 card-hover-3d shadow-2xl relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
                   {/* Decorative card gradient glow on hover */}
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                   {/* Image container */}
-                  <div className="w-full h-48 flex items-center justify-center bg-black/40 rounded-xl mb-5 overflow-hidden border border-white/5 relative">
+                  <div className="w-full h-48 flex items-center justify-center bg-black/40 rounded-xl mb-5 overflow-hidden border border-white/5 relative card-hover-3d-child">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -105,29 +113,34 @@ function Projects() {
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  {/* Tech Badges (Standard fullstack badges for visual polish) */}
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10">
-                      MERN Stack
-                    </span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-white/5 text-gray-300 border border-white/5">
-                      Tailwind
-                    </span>
+                  {/* Tech Badges (Dynamic or fallback) */}
+                  <div className="flex flex-wrap gap-2 mb-3 depth-badge">
+                    {(project.technologies && project.technologies.length > 0
+                      ? project.technologies
+                      : ["HTML", "CSS", "JavaScript"]
+                    ).map((tech, techIdx) => (
+                      <span
+                        key={techIdx}
+                        className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors leading-tight">
+                  <h3 className="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors leading-tight depth-title">
                     {project.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-3">
+                  <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-3 depth-desc">
                     {project.description}
                   </p>
                 </div>
 
                 {/* Button actions */}
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between depth-actions">
                   <a
                     href={project.link}
                     target="_blank"

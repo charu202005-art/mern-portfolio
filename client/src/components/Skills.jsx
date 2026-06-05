@@ -35,6 +35,7 @@ function Skills() {
     { name: "MySQL", icon: <FaDatabase className="text-cyan-600" />, desc: "Relational database tables" },
     { name: "Java", icon: <FaJava className="text-red-500" />, desc: "Object-oriented program logic" },
     { name: "Python", icon: <FaPython className="text-yellow-600" />, desc: "High-level scripting & scripting" },
+    { name: "Git", icon: <FaGitAlt className="text-white" />, desc: "Va distributed version control software used to track changes in coden control  & collaboration" },
     { name: "GitHub", icon: <FaGitAlt className="text-white" />, desc: "Version control & collaboration" },
     { name: "Canva", icon: <FaPaintBrush className="text-purple-400" />, desc: "Interface mockups & graphics" },
   ];
@@ -68,7 +69,7 @@ function Skills() {
   return (
     <section
       id="skills"
-      className="relative min-h-screen flex flex-col justify-center items-center px-6 py-24 bg-black overflow-hidden"
+      className="relative py-16 md:py-28 px-6 lg:min-h-screen flex flex-col justify-center items-center bg-black overflow-hidden"
     >
       {/* Decorative top glow */}
       <div className="absolute left-1/2 -translate-x-1/2 top-0 w-96 h-96 rounded-full bg-brand-cyan/5 blur-[120px] pointer-events-none" />
@@ -96,21 +97,19 @@ function Skills() {
       <div className="flex gap-4 p-1 rounded-xl bg-white/5 border border-white/5 backdrop-blur-md mb-12 relative z-10">
         <button
           onClick={() => setActiveTab("technical")}
-          className={`px-6 py-2.5 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
-            activeTab === "technical"
+          className={`px-6 py-2.5 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${activeTab === "technical"
               ? "bg-brand-cyan text-black shadow-lg shadow-brand-cyan/20"
               : "text-gray-400 hover:text-white"
-          }`}
+            }`}
         >
           Technical
         </button>
         <button
           onClick={() => setActiveTab("soft")}
-          className={`px-6 py-2.5 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
-            activeTab === "soft"
+          className={`px-6 py-2.5 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${activeTab === "soft"
               ? "bg-brand-cyan text-black shadow-lg shadow-brand-cyan/20"
               : "text-gray-400 hover:text-white"
-          }`}
+            }`}
         >
           Soft Skills
         </button>

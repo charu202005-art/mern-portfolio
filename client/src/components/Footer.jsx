@@ -22,7 +22,7 @@ function Footer() {
         {/* Social Link Badges */}
         <div className="flex justify-center gap-6 mt-8">
           <a
-            href="https://github.com/charu202005"
+            href="https://github.com/charu202005-art"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3.5 rounded-full bg-white/5 border border-white/5 text-gray-400 hover:text-brand-cyan hover:border-brand-cyan/30 hover:bg-brand-cyan/5 transition-all duration-300 shadow-lg cursor-pointer"
@@ -42,7 +42,7 @@ function Footer() {
           </a>
 
           <a
-            href="mailto:charmathym2005@gmail.com"
+            href="mailto:char202005@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3.5 rounded-full bg-white/5 border border-white/5 text-gray-400 hover:text-brand-cyan hover:border-brand-cyan/30 hover:bg-brand-cyan/5 transition-all duration-300 shadow-lg cursor-pointer"

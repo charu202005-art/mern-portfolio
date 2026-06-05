@@ -12,12 +12,12 @@ function About() {
   return (
     <section
       id="about"
-      className="relative min-h-screen flex items-center justify-center py-20 px-6 overflow-hidden bg-black"
+      className="relative py-16 md:py-28 px-6 lg:min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
       {/* Decorative side glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-brand-purple/5 blur-[120px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20 z-10">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-20 z-10">
         
         {/* Left Side - Interactive Photo Frame */}
         <motion.div

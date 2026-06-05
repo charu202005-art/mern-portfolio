@@ -52,7 +52,7 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen bg-[radial-gradient(ellipse_at_bottom,_rgba(189,0,255,0.03),_transparent_50%)] text-white px-6 md:px-12 py-24 overflow-hidden flex flex-col justify-center items-center"
+      className="relative py-16 md:py-28 px-6 lg:min-h-screen bg-[radial-gradient(ellipse_at_bottom,_rgba(189,0,255,0.03),_transparent_50%)] text-white overflow-hidden flex flex-col justify-center items-center"
     >
       {/* Decorative side glow */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-brand-cyan/5 blur-[120px] pointer-events-none" />
@@ -116,7 +116,7 @@ function Contact() {
             <input
               type="email"
               name="email"
-              placeholder="charmathy@gmail.com"
+              placeholder="char202005@gmail.com"
               value={formData.email}
               onChange={handleChange}
               required

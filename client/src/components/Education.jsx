@@ -5,14 +5,14 @@ function Education() {
   return (
     <section
       id="education"
-      className="relative min-h-screen flex flex-col justify-center items-center px-6 py-24 bg-[radial-gradient(ellipse_at_bottom,_rgba(189,0,255,0.05),_transparent_50%)]"
+      className="relative py-16 md:py-28 px-6 lg:min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_bottom,_rgba(189,0,255,0.05),_transparent_50%)]"
     >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-12 lg:mb-16"
       >
         <span className="text-xs uppercase tracking-[0.25em] font-semibold text-brand-cyan">
           Academic Timeline
@@ -22,7 +22,7 @@ function Education() {
         </h2>
       </motion.div>
 
-      <div className="max-w-5xl w-full flex flex-col lg:flex-row items-center gap-12">
+      <div className="max-w-5xl w-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
         
         {/* Left Column - College Showcase */}
         <motion.div
