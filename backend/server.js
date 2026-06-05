@@ -11,15 +11,17 @@ app.use("/images", express.static("images"));
 const projects = [
   {
     title: "QR Code Billing System",
-    description: "Smart QR billing system",
-    image: "https://mern-portfolio-veds.onrender.com/images/gpay.jpeg",
+    description: "Smart MERN stack QR billing application with instant receipt scanning.",
+    image: "http://localhost:5000/images/gpay.png",
     link: "/QR_CODE.pdf",
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
   },
   {
-    title: "NAVIA Campus Robot",
-    description: "Voice + sensor navigation robot",
-    image: "https://mern-portfolio-veds.onrender.com/images/Navia.jpeg",
+    title: "NAVIA Campus Guide Robot",
+    description: "Autonomous voice & sensor navigation campus robot built with Raspberry Pi.",
+    image: "http://localhost:5000/images/Navia.png",
     link: "/Navia.pdf",
+    technologies: ["Raspberry Pi", "Sensor Navigation"],
   },
 ];
 
