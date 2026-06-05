@@ -1,0 +1,10 @@
+{
+  "name": "mern-portfolio-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix backend run dev",
+    "dev": "npm --prefix backend run dev & npm --prefix client run dev"
+  }
+}

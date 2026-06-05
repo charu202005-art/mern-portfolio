@@ -64,15 +64,14 @@ body {
 
 /* 3D Interactive Card Hover Effect */
 .card-hover-3d {
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.5s ease;
+  transition: border-color 0.3s ease, box-shadow 0.5s ease;
   transform-style: preserve-3d;
   perspective: 1000px;
   position: relative;
 }
 
 .card-hover-3d:hover {
-  transform: translateY(-8px) rotateX(6deg) rotateY(-4deg);
-  box-shadow: 0 25px 50px rgba(0, 240, 255, 0.12);
+  box-shadow: 0 30px 60px rgba(0, 240, 255, 0.15), 0 0 40px rgba(189, 0, 255, 0.05);
 }
 
 /* Loop glowing outline border on hover */
@@ -139,7 +138,7 @@ body {
 }
 
 .card-hover-3d:hover .depth-actions {
-  transform: translateZ(45px);
+  transform: translateZ(40px);
 }
 
 /* Ambient Floating Keyframes */

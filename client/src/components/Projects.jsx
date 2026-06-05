@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 
 const SkeletonCard = () => (
@@ -11,6 +11,144 @@ const SkeletonCard = () => (
     <div className="h-10 bg-white/10 rounded-xl w-1/3" />
   </div>
 );
+
+const ProjectCard = ({ project, variants }) => {
+  const cardRef = useRef(null);
+
+  // Track cursor position coordinates relative to card center
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Create smooth springs of these coordinates to avoid sudden transitions
+  const springConfig = { stiffness: 150, damping: 22, mass: 0.6 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  // Map smooth coordinates to rotation angles (limit rotation to +/- 12 degrees)
+  const rotateX = useTransform(springY, [-0.5, 0.5], [12, -12]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-12, 12]);
+
+  // Map smooth coordinates to glare background radial gradient position
+  const glareBg = useTransform(
+    [springX, springY],
+    ([latestX, latestY]) => {
+      const pctX = (latestX + 0.5) * 100;
+      const pctY = (latestY + 0.5) * 100;
+      return `radial-gradient(circle 240px at ${pctX}% ${pctY}%, rgba(0, 240, 255, 0.12) 0%, rgba(189, 0, 255, 0.04) 50%, transparent 100%)`;
+    }
+  );
+
+  // Glare visibility animation
+  const opacityVal = useMotionValue(0);
+  const opacitySpring = useSpring(opacityVal, springConfig);
+
+  const handleMouseMove = (event) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left - width / 2;
+    const mouseY = event.clientY - rect.top - height / 2;
+
+    x.set(mouseX / width);
+    y.set(mouseY / height);
+    opacityVal.set(1);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+    opacityVal.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      variants={variants}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 card-hover-3d shadow-2xl relative overflow-hidden flex flex-col justify-between"
+    >
+      {/* Dynamic light reflection glare layer */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-30"
+        style={{
+          background: glareBg,
+          opacity: opacitySpring,
+        }}
+      />
+
+      {/* Preserve 3D context wrapper for child elements */}
+      <div style={{ transformStyle: "preserve-3d" }}>
+        {/* Decorative card top border line glow on hover */}
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+        {/* Image container */}
+        <div className="w-full h-48 flex items-center justify-center bg-black/40 rounded-xl mb-5 overflow-hidden border border-white/5 relative card-hover-3d-child">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="max-h-full max-w-full object-cover group-hover:scale-105 transition-all duration-500"
+          />
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+
+        {/* Tech Badges */}
+        <div className="flex flex-wrap gap-2 mb-3 depth-badge">
+          {(project.technologies && project.technologies.length > 0
+            ? project.technologies
+            : ["HTML", "CSS", "JavaScript"]
+          ).map((tech, techIdx) => (
+            <span
+              key={techIdx}
+              className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Title */}
+        <h3 className="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors leading-tight depth-title">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-3 depth-desc">
+          {project.description}
+        </p>
+      </div>
+
+      {/* Button actions */}
+      <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between depth-actions">
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-cyan text-black hover:bg-white transition-all duration-300 font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/5"
+        >
+          View Project <FaExternalLinkAlt size={10} />
+        </a>
+
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2.5 rounded-xl border border-white/10 hover:border-white text-gray-400 hover:text-white transition-all duration-300"
+          >
+            <FaGithub size={16} />
+          </a>
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 function Projects() {
   const [projectData, setProjectData] = useState([]);
@@ -42,8 +180,17 @@ function Projects() {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50, rotateX: 20, rotateY: -10, scale: 0.9 },
-    show: { opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1, transition: { type: "spring", stiffness: 90, damping: 14 } }
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
   };
 
   return (
@@ -94,74 +241,11 @@ function Projects() {
             className="flex justify-center gap-8 flex-wrap w-full"
           >
             {projectData.map((project, index) => (
-              <motion.div
+              <ProjectCard
                 key={index}
+                project={project}
                 variants={cardVariants}
-                className="group glass-panel p-6 rounded-2xl w-full md:w-[350px] border border-white/5 card-hover-3d shadow-2xl relative overflow-hidden flex flex-col justify-between"
-              >
-                <div>
-                  {/* Decorative card gradient glow on hover */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                  {/* Image container */}
-                  <div className="w-full h-48 flex items-center justify-center bg-black/40 rounded-xl mb-5 overflow-hidden border border-white/5 relative card-hover-3d-child">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="max-h-full max-w-full object-cover group-hover:scale-105 transition-all duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-
-                  {/* Tech Badges (Dynamic or fallback) */}
-                  <div className="flex flex-wrap gap-2 mb-3 depth-badge">
-                    {(project.technologies && project.technologies.length > 0
-                      ? project.technologies
-                      : ["HTML", "CSS", "JavaScript"]
-                    ).map((tech, techIdx) => (
-                      <span
-                        key={techIdx}
-                        className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/10"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors leading-tight depth-title">
-                    {project.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="mt-3 text-gray-400 text-sm leading-relaxed line-clamp-3 depth-desc">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Button actions */}
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between depth-actions">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-cyan text-black hover:bg-white transition-all duration-300 font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/5"
-                  >
-                    View Project <FaExternalLinkAlt size={10} />
-                  </a>
-
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl border border-white/10 hover:border-white text-gray-400 hover:text-white transition-all duration-300"
-                    >
-                      <FaGithub size={16} />
-                    </a>
-                  )}
-                </div>
-              </motion.div>
+              />
             ))}
           </motion.div>
         )}
